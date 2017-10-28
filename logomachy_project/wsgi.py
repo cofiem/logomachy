@@ -1,5 +1,5 @@
 """
-WSGI config for logomachy project.
+WSGI config for logomachy_project project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logomachy.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logomachy_project.settings.development")
 
 application = get_wsgi_application()

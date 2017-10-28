@@ -23,8 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Application definition
 
 INSTALLED_APPS = [
-    'logomachy.core',
-    'logomachy.text_stats',
+    'logomachy.logomachy_auth.apps.LogomachyAuthConfig',
+    'logomachy.logomachy_core.apps.LogomachyCoreConfig',
+    'logomachy.logomachy_text_stats.apps.LogomachyTextStatsConfig',
     'django.contrib.admindocs',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,6 +82,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'logomachy_auth.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logomachy_project.settings.development")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "logomachy_project.settings.dev_web")
 
 application = get_wsgi_application()

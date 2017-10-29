@@ -101,4 +101,8 @@ class BaseModel(models.Model):
 
     @classmethod
     def get_admin_list_url(cls):
+        """
+        Get the url to an admin list page for a particular model in a particular application.
+        """
+
         return urlresolvers.reverse("admin:{}_{}_change".format(cls._meta.app_label, cls._meta.model_name))

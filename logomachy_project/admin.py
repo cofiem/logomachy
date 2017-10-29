@@ -10,6 +10,10 @@ from logomachy.logomachy_core.admin.document_type_admin import DocumentTypeAdmin
 
 
 class LogomachyAdminSite(AdminSite):
+    """
+    An application that customises the Django admin site for Logomachy.
+    """
+
     site_header = _('Logomachy administration')
     site_title = _('Logomachy site admin')
     index_title = _('Logomachy site administration')

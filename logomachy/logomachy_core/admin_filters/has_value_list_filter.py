@@ -3,6 +3,10 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class HasValueListFilter(admin.SimpleListFilter):
+    """
+    A list filter for easily filtering by whether a column has a value or not.
+    """
+
     # Human-readable title which will be displayed in the
     # right admin sidebar just above the filter options.
     title = ''

@@ -41,8 +41,15 @@ def make_items_link(obj_association, model_admin_name, obj_id_association, obj_i
 
 
 def custom_titled_filter(title):
+    """
+    A simple way to create a list filter with a custom title.
+    """
 
     class AdminFilterWrapper(admin.FieldListFilter):
+        """
+        A very simple list filter that allows setting the list filter title.
+        """
+
         def __new__(cls, *args, **kwargs):
             instance = admin.FieldListFilter.create(*args, **kwargs)
             instance.title = title
@@ -51,21 +58,41 @@ def custom_titled_filter(title):
 
 
 def custom_has_value_filter(field, filter_title=None):
+    """
+    A simple way to create a has value list filter with a custom title.
+    """
+
     class CustomHasValueFieldFilter(HasValueListFilter):
+        """
+        A very simple has value list filter that allows setting the list filter title.
+        """
+
         parameter_name = str(field)
         title = filter_title or field
     return CustomHasValueFieldFilter
 
 
 class TimestampAdmin(admin.ModelAdmin):
+    """
+    Admin display that includes created_date and modified_date.
+    """
+
     list_display = ('created_date', 'modified_date')
     list_filter = ('created_date', 'modified_date')
 
 
 class LookupListFilterAdmin(admin.ModelAdmin):
+    """
+    Makes setting the allowed lookups easy.
+    """
+
     # need to allow these lookups
     # see https://github.com/django/django/blob/9459ec82aa12cad9b859c54c2f33f50bec057f2e/django/contrib/auth/admin.py
     def lookup_allowed(self, lookup, value):
+        """
+        Defines the lookups that are allowed.
+        """
+
         if hasattr(self, 'lookup_list_filter') and lookup in self.lookup_list_filter:
             return True
         return super(admin.ModelAdmin, self).lookup_allowed(lookup, value)

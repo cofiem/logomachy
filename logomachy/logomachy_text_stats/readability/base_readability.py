@@ -1,9 +1,11 @@
 from enum import Enum, unique
 from logging import Logger
 
+from logomachy.logomachy_core.text_analyser.base_text_analyser import BaseTextAnalyser
+
 
 class BaseReadability:
-    def __init__(self, logger: Logger, text_analyser):
+    def __init__(self, logger: Logger, text_analyser: BaseTextAnalyser):
         self._logger = logger
         self._text_analyser = text_analyser
 

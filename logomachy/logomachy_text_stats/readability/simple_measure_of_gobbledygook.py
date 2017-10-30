@@ -19,7 +19,7 @@ class SimpleMeasureOfGobbledygook(BaseReadability):
             return ReadingLevel.unknown
         text_info = self._text_analyser.get_text_info(text)
         sentences = text_info.sentence_count
-        polysyllable_words = text_info.polysyllable_word_count
+        polysyllable_words = text_info.polysyllable_count
 
         if sentences < 1:
             return ReadingLevel.unknown

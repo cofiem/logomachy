@@ -33,7 +33,7 @@ class GunningFogIndex(BaseReadability):
         text_info = self._text_analyser.get_text_info(text)
         words = text_info.word_count
         sentences = text_info.sentence_count
-        polysyllable_words = text_info.polysyllable_word_count
+        polysyllable_words = text_info.polysyllable_count
 
         if sentences < 1 or words < 1:
             return ReadingLevel.unknown

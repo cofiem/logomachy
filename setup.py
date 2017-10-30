@@ -24,7 +24,7 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 def get_version():
     version = None
-    version_file = os.path.join(os.path.abspath(os.path.dirname(__file__)), '_version.py')
+    version_file = os.path.join(here, '_version.py')
     fp = open(version_file)
     with fp:
         for line in fp:
@@ -78,7 +78,8 @@ setup(
     # https://packaging.python.org/en/latest/requirements.html
     install_requires=[
         'django', 'docutils', 'pytz',
-        'numpy', 'nltk', 'spacy'],
+        'numpy', 'nltk', 'spacy'
+    ],
 
     python_requires='>=3.5.*, <4',
 
@@ -87,8 +88,15 @@ setup(
     # for example:
     # $ pip install -e .[dev,test]
     extras_require={
-        'dev': ['bumpversion', 'mypy', 'typed-ast', 'check-manifest'],
-        'test': ['coverage', 'lxml'],
+        'dev': [
+            'bumpversion',
+            'mypy', 'typed-ast',
+            'check-manifest',
+            'sphinx', 'sphinx-autobuild'
+        ],
+        'test': [
+            'coverage', 'lxml'
+        ],
     },
 
     include_package_data=True,

@@ -1,2 +1,0 @@
-# Logomachy Development
-

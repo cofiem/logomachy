@@ -26,32 +26,49 @@ class BaseModel(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
-        super(BaseModel, self).save(*args, **kwargs)
-
         # add LogEntry log_action
         request = self._get_request_user(**kwargs)
         if self.pk is None:
             # add / create
-            msg = [{'added': {'name': str(self._meta.verbose_name), 'object': str(self), }}]
+            msg = [{'added': {
+                'name': str(self._meta.verbose_name),
+                'object': str(self),
+            }}]
             self._log_addition(request, self, msg)
+            self.created_user = request.user
         else:
             # update / modify - fields: list of field names
-            msg = [{'added': {'name': str(self._meta.verbose_name), 'object': str(self), 'fields': []}}]
+            msg = [{'added': {
+                'name': str(self._meta.verbose_name),
+                'object': str(self),
+                'fields': sorted(f.name for f in self._meta.get_fields()),
+            }}]
             self._log_change(request, self, msg)
+            self.updated_user = request.user
+
+        # save object
+        if 'request' in kwargs:
+            kwargs.pop('request')
+        super(BaseModel, self).save(*args, **kwargs)
 
         # TODO: include user in save
 
     def delete(self, *args, **kwargs):
-        super(BaseModel, self).delete(*args, **kwargs)
-
         # add LogEntry log_action
         request = self._get_request_user(**kwargs)
         self._log_deletion(request, self, str(self))
+        self.archived_user = request.user
+
+        # delete object
+        if 'request' in kwargs:
+            kwargs.pop('request')
+        return super(BaseModel, self).delete(*args, **kwargs)
 
     def _get_request_user(self, **kwargs):
         request = kwargs.get('request')
         if not request or not request.user or request.user.is_anonymous:
-            raise ValueError('Must pass request with valid user when deleting a model instance.')
+            raise ValueError(
+                'Must pass request with valid logged in user for creating, updating, or deleting a model instance.')
         return request
 
     def _log_addition(self, request, obj, message):

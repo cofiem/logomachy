@@ -5,12 +5,12 @@ from unravel import models as app_models
 
 
 class DocumentVersion(app_models.BaseModel):
-    """A document version."""
+    """A Document version."""
 
     CONTENT_TEXT_LANGUAGES = (
+        ('english', 'English Language'),
         ('danish', 'Danish Language'),
         ('dutch', 'Dutch Language'),
-        ('english', 'English Language'),
         ('finnish', 'Finnish Language'),
         ('french', 'French Language'),
         ('german', 'German Language'),
@@ -31,8 +31,14 @@ class DocumentVersion(app_models.BaseModel):
     content_language = models.CharField(
         max_length=20, null=False, blank=False, default='english', choices=CONTENT_TEXT_LANGUAGES,
         help_text='The language of the document text.')
-    content_text = models.TextField(
-        null=False, blank=False, help_text='The document text.')
+
+    content_file = models.FileField(
+        null=True, blank=True, upload_to='document/%Y/%m/%d/', max_length=200,
+        help_text='The file containing the document content.')
+    content_text_raw = models.TextField(
+        null=True, blank=True, help_text='The raw document text.')
+    content_text_formatted = models.TextField(
+        null=True, blank=True, help_text='The formatted document text.')
 
     # the norm and simple content text are PostgreSQL tsvector, they are set by celery tasks
     content_text_norm = search.SearchVectorField(
@@ -42,7 +48,7 @@ class DocumentVersion(app_models.BaseModel):
 
     document = models.ForeignKey(
         app_models.Document, on_delete=models.CASCADE, related_name='versions',
-        help_text='Metadata for this document version.')
+        help_text='Metadata for the document that does not change between versions.')
 
     class Meta:
         verbose_name = 'Document Version'

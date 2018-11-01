@@ -4,14 +4,14 @@ from unravel import models as app_models
 
 
 class DocumentResult(app_models.BaseModel):
-    """Output from analysing a document."""
+    """Output from analysing one or more Documents."""
 
-    document = models.ForeignKey(
-        app_models.Document, on_delete=models.CASCADE, related_name='results', help_text='Document that was analysed.')
+    documents = models.ManyToManyField(
+        app_models.Document, related_name='results', help_text='Documents that were analysed.')
 
     class Meta:
         verbose_name = 'Document Result'
         verbose_name_plural = 'Document Results'
 
     def __str__(self):
-        return 'Results for {}'.format(self.document.title)
+        return 'Results for {} documents'.format(self.documents.count())

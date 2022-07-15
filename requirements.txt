@@ -3,7 +3,7 @@ billiard==3.5.0.4
 celery==4.2.1
 Django==2.1.2
 django-celery-beat==1.1.1
-django-celery-results==1.0.1
+django-celery-results==2.4.0
 docutils==0.14
 kombu==4.2.1
 psycopg2-binary==2.7.5
